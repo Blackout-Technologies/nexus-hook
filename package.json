@@ -18,7 +18,7 @@
     },
 
     "dependencies": {
-        "promise": "*",
+        "request": "*",
         "request-promise": "*"
     }
 }
