@@ -13,8 +13,26 @@ handle data from the dialog engine.
 ### Process
 
 The `process()` function is the heart of the hook, it has the following parameters:
+
 |Parameter|Type|Description|
 |---|---|---|
 |intent|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
 |text|String|This string contains the original phrasing of the user|
 |complete|Callback|This is the completion function, it has to be called at the end of your script in order to continue dialog.|
+
+### Simple Eample implementation
+
+```JavaScript
+const Hook = require('nexus-hook').Hook;
+
+module.exports = class WeatherHook extends Hook {
+    process(intents, text, complete){
+        this.request('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Bremen&units=metric&appid=<ID>', {}, (resp) => {
+            complete({
+                answer: 'The weather in Bremen is: '+resp.weather[0].main+" with "+resp.main.temp+" degrees.",
+                platform: {}
+            });
+        });
+    }
+}
+```
