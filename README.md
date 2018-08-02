@@ -18,7 +18,11 @@ The `process()` function is the heart of the hook, it has the following paramete
 |---|---|---|
 |intent|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
 |text|String|This string contains the original phrasing of the user|
+|session|Object|The complete user session, including the message thread|
 |complete|Callback|This is the completion function, it has to be called at the end of your script in order to continue dialog.|
+
+ *Additional Variables*
+ `this.json` contains the POST request that the user client sent to the chat bot.
 
 ### Completion callback
 
