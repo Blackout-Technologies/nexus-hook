@@ -17,8 +17,18 @@
         "url" : "https://github.com/Blackout-Technologies/nexus-hook.git"
     },
 
+    "module": "nexus",
+    "sync": {
+        "mf": [
+            {
+                "name": "chaar"
+            }
+        ]
+    },
+
     "dependencies": {
         "request": "*",
-        "request-promise": "*"
+        "request-promise": "*",
+        "find-root": "*"
     }
 }
