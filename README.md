@@ -10,6 +10,18 @@ In order to develop a hook you first need to subclass the `Hook` class from this
 library. You need to implement the function `process()` in order to be able to
 handle data from the dialog engine.
 
+### Training
+
+During the *training phase* of the artificial intelligence, you will be able to hook
+yourself into the process of preparing training data.
+
+During training preprerations `prepareTraining` is called with the following parameters:
+
+|Parameter|Type|Description|
+|---|---|---|
+|phrases|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
+|complete|Callback|This is the completion function, complete has to be called with an array parameter. The array must be a list of objects that have the following layout: `{id: <phraseID>, text: <phraseText>}`|
+
 ### Process
 
 The `process()` function is the heart of the hook, it has the following parameters:
