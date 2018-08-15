@@ -1,4 +1,16 @@
-# blackout nexus hooks
+# Blackout Nexus hooks
+
+![Blackout logo](https://blackout.ai/img/logo/logo.png)
+
+|Author|Email|Latest version|State|
+|---|---|---|---|
+|Marc Fiedler|dev@blackout.ai|0.3.0|`BETA`
+
+## License
+|Copyrite|License
+|---|---|
+|Blackout Technologies|GPLv3|
+
 
 Hooks are custom scripts that can be integrated into any point within a dialog
 to access external or living data. Any information and data that is not part of
@@ -83,3 +95,4 @@ module.exports = class WeatherHook extends Hook {
     }
 }
 ```
+> btNexus is a product of Blackout Technologies, all rights reserved (https://blackout.ai/)
