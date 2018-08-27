@@ -4,7 +4,7 @@
 
 |Author|Email|Latest version|State|
 |---|---|---|---|
-|Marc Fiedler|dev@blackout.ai|0.3.0|`BETA`
+|Marc Fiedler|dev@blackout.ai|0.4.0|`BETA`
 
 ## License
 |Copyrite|License
@@ -22,7 +22,7 @@ In order to develop a hook you first need to subclass the `Hook` class from this
 library. You need to implement the function `process()` in order to be able to
 handle data from the dialog engine.
 
-### Training
+### Prepare training function
 
 During the *training phase* of the artificial intelligence, you will be able to hook
 yourself into the process of preparing training data.
@@ -34,7 +34,29 @@ During training preprerations `prepareTraining` is called with the following par
 |phrases|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
 |complete|Callback|This is the completion function, complete has to be called with an array parameter. The array must be a list of objects that have the following layout: `{id: <phraseID>, text: <phraseText>}`|
 
-### Process
+```JavaScript
+/**
+ *  @param {String} intent Name of the intent that is currently in use
+ *  @param {Array} phrases Array that contains all phrasing examples for the intent that triggers this Hook.
+ *  @param {Callback} complete Completion callback to continue dialog
+ */
+prepareTraining(intent, phrases, complete){
+    var samples [];
+
+    // go through all phrasings and find the once that we want
+    // to manipulate
+    for( var i in phrases ){
+        if( phrases[i].indexOf("$city") > -1 ){
+            samples.push(phrases[i]);
+        }
+    }
+
+    // return the samples back to the training service
+    complete(samples);
+}
+```
+
+### Process function
 
 The `process()` function is the heart of the hook, it has the following parameters:
 
@@ -55,6 +77,7 @@ hook is doing. You have to transport at least a `answer` string through
 the completion callback. Optionally you can also add a `platform` object
 that can hold additional platform information like buttons, images, actions.
 Example:
+
 ```JavaScript
 complete({
     answer: "I love cookies!",
@@ -95,4 +118,75 @@ module.exports = class WeatherHook extends Hook {
     }
 }
 ```
+
+# Handling languages
+If you want to provide multi-lingual support to your hook you can do that with the `languageDict` implementation that comes with the `nexus-hook` library.
+
+Each hook has a member variable called `captions` you can access it via `this.captions`. You can get a language specific phrasing with the `get()` function of the `captions` object.
+
+In order to have a working language dictionary, you need to create a file called `languageDict.json` in the root folder of your hook.
+
+## Example languageDict file
+
+```json
+{
+    "de": {
+        "fallback": "Ich habe keine informationen zu deiner Suche gefunden",
+        "weatherAnswer": "Das Wetter in $city ist $weather mit $temperature grad"
+    },
+    "en": {
+        "fallback": "Sorry, I can't find anything.",
+        "weatherAnswer": "The weather in $city is $weather with $temperature degrees"
+    }
+}
+```
+
+If the setup of the `languageDict.json` was done correctly, you will be able to access any caption with the `get()` function passing the name of the caption as a string.
+
+## Example usage
+```JavaScript
+this.captions.get('fallback'); // in the above example will return:  "Sorry, I can't find anything." if the language is english
+```
+
+# Testing
+The integrations in the `nexusUi` as of version <= *2.0.0* will not support error feedback. In order to test your hook, you can utilize the `TestHook` class of the `nexus-hook` library.
+
+The `TestHook` class has only one function called `chat` the prototype of the chat function looks like this:
+
+```JavaScript
+chat(intent, text, complete)
+```
+
+You will have to pass an intent name and a text to the chat function of the `TestHook` class. The response will then be returned through the complete callback.
+
+The rest of the hook will behave exacly the same as it would, when you integrate it into the `nexusUi`.
+
+## Example
+
+```JavaScript
+// Test implementation
+const Hook = require('nexus-hook').TestHook;
+var myHook = new Hook("en");
+
+// run the test hook with the test parameters
+myHook.chat("weahter_intent", "whats the weather like in Bremen", (resp) => {
+    console.log(resp.answer);
+});
+```
+
+## Example Output
+```
+=== Testing Hook ===
+Weather hook v0.1.0 loaded
+Sorry, I can't find anything.
+The weather in Köln is Clouds with $20.6 degrees
+The weather in Bremen is Clouds with $18.43 degrees
+The weather in Hamburg is Clouds with $18.6 degrees
+Weather hook v0.1.0 loaded
+Ich habe keine informationen zu deiner Suche gefunden
+Das Wetter in Bremen ist Clouds mit $18.43 grad
+Das Wetter in Hamburg ist Clouds mit $18.61 grad
+Das Wetter in Köln ist Clouds mit $20.6 grad
+```
+
 > btNexus is a product of Blackout Technologies, all rights reserved (https://blackout.ai/)

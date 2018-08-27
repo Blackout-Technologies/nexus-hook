@@ -8,8 +8,10 @@
 "use_strict";
 
 const Hook = require('./lib/hook.js');
+const TestHook = require('./lib/hookTest.js');
 
 // Generate the Public API of the Ophion System
 module.exports = {
-    Hook
+    Hook,
+    TestHook
 };
