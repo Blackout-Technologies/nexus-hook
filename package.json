@@ -1,6 +1,6 @@
 {
     "name": "nexus-hook",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Baseline libary for blackout nexus hooks.",
     "keywords": ["ai", "btnexus", "nexus", "blackout", "chat", "hook", "chatbot", "artificial intelligence"],
 
