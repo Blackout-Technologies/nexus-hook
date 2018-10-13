@@ -1,16 +1,15 @@
 # Blackout Nexus hooks
 
-![Blackout logo](https://blackout.ai/img/logo/logo.png)
+![Blackout logo](https://www.blackout.ai/wp-content/uploads/2018/08/logo.png)
 
-|Author|Email|Latest version|State|
+|Author|Email|Latest version|Required Nexus Versions|State|
 |---|---|---|---|
-|Marc Fiedler|dev@blackout.ai|0.4.0|`BETA`
+|Marc Fiedler|dev@blackout.ai|0.6.0|`NexusUi >= 2.0.57` / `Brocas >= 1.4.7 ``|`BETA`
 
 ## License
 |Copyrite|License
 |---|---|
 |Blackout Technologies|GPLv3|
-
 
 Hooks are custom scripts that can be integrated into any point within a dialog
 to access external or living data. Any information and data that is not part of
@@ -80,17 +79,84 @@ Example:
 
 ```JavaScript
 complete({
-    answer: "I love cookies!",
-    platform: {
-        buttons: [
-            {caption: "Give more cookies", action: "give more cookies"},
-            {caption: "Eat all cookies yourself", action: "i eat all cookies myself"}
-        ]
-    }
+    answer: "The cake is a lie!",
+    platform: {}
 })
 ```
 
-### Simple Eample implementation
+# Nexus tools
+In the world of the Blackout Nexus, there are some specific standards you need to follow in order to laverage maximum use of the nexus power. One of those are the so-called `hyperReferences`. What that means is that you can utilise the `hyperReference` objects to reference elements from outside of the scope of your hook. `Links`, `Buttons`, `Carousels`, `MailTos` and `Dialog Buttons` are part of the current array of possible object types for a `hyperReference`.
+
+An other tool that you can utalize are the `platformReactions`, these objects are designed for the platform interface that you are using to have your personality communicate with humans. The HMI (Human Machnine Interface) if you will. `platformReactions` are much more complex as they transport not only context information for the HMI but can also contain telemetry, geometry and odometry data for more complex interfaces.
+
+## Hyper References
+
+There are three ways to use `hyperReferences` in your hook:
+
+1. Use a pre-defined `hyperReference` from within the nexusUi. The only thing you will need will be the `name` of the `hyperReference` inside your Nexus instance.
+```JavaScript
+    complete({
+        answer: "The cake is a lie!",
+        platform: {
+            hyperReferences: [
+                this.getHyperReferenceNamed('Website')
+            ]
+        }
+    })
+```
+
+2. Create your own `hyperReference` when you need it. This allows for more flexibility as not every nexus instance will share the same `hyperReferences`
+```JavaScript
+    complete({
+        answer: "The cake is a lie!",
+        platform: {
+            hyperReferences: [
+                {type: "link", blank: true, target: 'https://www.tasteofhome.com/wp-content/uploads/2017/10/Mint-Patty-Cake_exps140673_CMT2426390C08_17_2b_RMS-1-696x696.jpg', caption: "Get the cake"}
+            ]
+        }
+    })
+```
+
+3. Generate a hyper refernece from existing resources inside of the hook. Assume you have a file in your `templates/` folder called `home.hbs`
+```JavaScript
+    complete({
+        answer: "The cake is a lie!",
+        platform: {
+            hyperReferences: [
+                this.generateHyperReferenceFor('home')
+            ]
+        }
+    })
+```
+
+## Platform Reactions
+
+## Handling Hook resources
+
+Each hook can come with it's own resources. JS/CSS files for the browser, Images and even HTML content. Each file must be kept in their respective folder.
+
+```
+    [Hook]
+        -> index.js (must always be present)
+        -> package.json (must always be present)
+
+        -> tests (optional, but encouraged)
+            -> myFirstTest.js (optional)
+
+        -> img (optional)
+            -> <keep image resources here>
+
+        -> js (optional)
+            -> <keep JavaScript resources here>
+
+        -> css (optional)
+            -> <keep css resources here>
+
+        -> templates (optional)
+            -> <keep hbs resources here>
+```
+
+# Simple Example implementation
 
 ```JavaScript
 // load the Hook class from this library
