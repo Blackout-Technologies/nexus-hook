@@ -6,7 +6,7 @@
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.0|
+|Latest stable version|0.6.1|
 |Required Nexus UI versions| >= 2.0.57 |
 |Required Brocas versions| >= 1.4.7|
 |State|`BETA`|
@@ -218,11 +218,11 @@ In order to have a working language dictionary, you need to create a file called
 
 ```json
 {
-    "de": {
+    "de-DE": {
         "fallback": "Ich habe keine informationen zu deiner Suche gefunden",
         "weatherAnswer": "Das Wetter in $city ist $weather mit $temperature grad"
     },
-    "en": {
+    "en-US": {
         "fallback": "Sorry, I can't find anything.",
         "weatherAnswer": "The weather in $city is $weather with $temperature degrees"
     }
