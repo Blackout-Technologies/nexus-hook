@@ -12,7 +12,7 @@
 |State|`BETA`|
 
 ## License
-|Copyrite|License
+|Copyright|License
 |---|---|
 |Blackout Technologies|GPLv3|
 
@@ -20,22 +20,22 @@ Hooks are custom scripts that can be integrated into any point within a dialog
 to access external or living data. Any information and data that is not part of
 the original A.I. training falls under the category `living data`.
 
-## Hook integration
+## Hook Integration
 
 In order to develop a hook you first need to subclass the `Hook` class from this
 library. You need to implement the function `process()` in order to be able to
 handle data from the dialog engine.
 
-### Prepare training function
+### Prepare Training Function
 
 During the *training phase* of the artificial intelligence, you will be able to hook
 yourself into the process of preparing training data.
 
-During training preprerations `prepareTraining` is called with the following parameters:
+During training preparations `prepareTraining` is called with the following parameters:
 
 |Parameter|Type|Description|
 |---|---|---|
-|phrases|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
+|phrases|Object|This is the intent that triggered the hook. This object has a `name` and a `confidence` field.|
 |complete|Callback|This is the completion function, complete has to be called with an array parameter. The array must be a list of objects that have the following layout: `{id: <phraseID>, text: <phraseText>}`|
 
 ```JavaScript
@@ -60,26 +60,26 @@ prepareTraining(intent, phrases, complete){
 }
 ```
 
-### Process function
+### Process Function
 
 The `process()` function is the heart of the hook, it has the following parameters:
 
 |Parameter|Type|Description|
 |---|---|---|
-|intent|Object|This is the intent that triggered the hook. this object has a `name` and a `confidence` field.|
+|intent|Object|This is the intent that triggered the hook. This object has a `name` and a `confidence` field.|
 |text|String|This string contains the original phrasing of the user|
 |session|Object|The complete user session, including the message thread|
-|complete|Callback|This is the completion function, it has to be called at the end of your script in order to continue dialog.|
+|complete|Callback|This is the completion function, it has to be called at the end of your script in order to continue the dialog.|
 
  *Additional Variables*
- `this.json` contains the POST request that the user client sent to the chat bot.
+ `this.json` contains the POST request that the user client sent to the chatbot.
 
-### Completion callback
+### Completion Callback
 
 The completion callback needs to be called at the end of what your
-hook is doing. You have to transport at least a `answer` string through
+hook is doing. You have to transport at least an `answer` string through
 the completion callback. Optionally you can also add a `platform` object
-that can hold additional platform information like buttons, images, actions.
+that can hold additional platform information like buttons, images or actions.
 Example:
 
 ```JavaScript
@@ -89,16 +89,16 @@ complete({
 })
 ```
 
-# Nexus tools
-In the world of the Blackout Nexus, there are some specific standards you need to follow in order to laverage maximum use of the nexus power. One of those are the so-called `hyperReferences`. What that means is that you can utilise the `hyperReference` objects to reference elements from outside of the scope of your hook. `Links`, `Buttons`, `Carousels`, `MailTos` and `Dialog Buttons` are part of the current array of possible object types for a `hyperReference`.
+# Nexus Tools
+In the world of the Blackout Nexus, there are some specific standards you need to follow in order to leverage the maximum use of the nexus power. One of those are the so-called `hyperReferences`. What that means is that you can utilise the `hyperReference` objects to reference elements from outside of the scope of your hook. `Links`, `Buttons`, `Carousels`, `MailTos` and `Dialog Buttons` are part of the current array of possible object types for a `hyperReference`.
 
-An other tool that you can utalize are the `platformReactions`, these objects are designed for the platform interface that you are using to have your personality communicate with humans. The HMI (Human Machnine Interface) if you will. `platformReactions` are much more complex as they transport not only context information for the HMI but can also contain telemetry, geometry and odometry data for more complex interfaces.
+Another tool that you can utalize is the `platformReactions`, these objects are designed for the platform interface that you are using, to have your personality communicate with humans. The HMI (Human Machine Interface) if you will. `platformReactions` are much more complex as they transport not only context information for the HMI but can also contain telemetry, geometry or odometry data for more complex interfaces.
 
 ## Hyper References
 
 There are three ways to use `hyperReferences` in your hook:
 
-1. Use a pre-defined `hyperReference` from within the nexusUi. The only thing you will need will be the `name` of the `hyperReference` inside your Nexus instance.
+1. Use a pre-defined `hyperReference` from within the nexusUi. The only thing you need is the `name` of the `hyperReference` inside your nexus instance.
 ```JavaScript
     complete({
         answer: "The cake is a lie!",
@@ -110,7 +110,7 @@ There are three ways to use `hyperReferences` in your hook:
     })
 ```
 
-2. Create your own `hyperReference` when you need it. This allows for more flexibility as not every nexus instance will share the same `hyperReferences`
+2. Create your own `hyperReference` when you need it. This allows for more flexibility since not every nexus instance will share the same `hyperReferences`
 ```JavaScript
     complete({
         answer: "The cake is a lie!",
@@ -174,7 +174,7 @@ Each hook can come with it's own resources. JS/CSS files for the browser, Images
             -> <keep hbs resources here>
 ```
 
-# Simple Example implementation
+# Simple Example Implementation
 
 ```JavaScript
 // load the Hook class from this library
@@ -203,14 +203,14 @@ module.exports = class WeatherHook extends Hook {
 }
 ```
 
-# Handling languages
-If you want to provide multi-lingual support to your hook you can do that with the `languageDict` implementation that comes with the `nexus-hook` library.
+# Handling Languages
+If you want to provide multilingual support to your hook you can do that with the `languageDict` implementation that comes with the `nexus-hook` library.
 
 Each hook has a member variable called `captions` you can access it via `this.captions`. You can get a language specific phrasing with the `get()` function of the `captions` object.
 
 In order to have a working language dictionary, you need to create a file called `languageDict.json` in the root folder of your hook.
 
-## Example languageDict file
+## Example languageDict File
 
 ```json
 {
@@ -227,7 +227,7 @@ In order to have a working language dictionary, you need to create a file called
 
 If the setup of the `languageDict.json` was done correctly, you will be able to access any caption with the `get()` function passing the name of the caption as a string.
 
-## Example usage
+## Example Usage
 ```JavaScript
 this.captions.get('fallback'); // in the above example will return:  "Sorry, I can't find anything." if the language is english
 ```
