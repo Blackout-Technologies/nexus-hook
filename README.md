@@ -2,9 +2,14 @@
 
 ![Blackout logo](https://www.blackout.ai/wp-content/uploads/2018/08/logo.png)
 
-|Author|Email|Latest version|Required Nexus Versions|State|
-|---|---|---|---|
-|Marc Fiedler|dev@blackout.ai|0.6.0|`NexusUi >= 2.0.57` / `Brocas >= 1.4.7 ``|`BETA`
+|-|Description
+|---|---|
+|Author|Marc Fiedler|
+|Email|dev@blackout.ai|
+|Latest stable version|0.6.0|
+|Required Nexus UI versions| >= 2.0.57 |
+|Required Brocas versions| >= 1.4.7|
+|State|`BETA`|
 
 ## License
 |Copyrite|License
@@ -111,13 +116,13 @@ There are three ways to use `hyperReferences` in your hook:
         answer: "The cake is a lie!",
         platform: {
             hyperReferences: [
-                {type: "link", blank: true, target: 'https://www.tasteofhome.com/wp-content/uploads/2017/10/Mint-Patty-Cake_exps140673_CMT2426390C08_17_2b_RMS-1-696x696.jpg', caption: "Get the cake"}
+                {type: "link", blank: true, target: 'http://www.vanschneider.com/wp-content/uploads/2017/01/cake_1200w.jpg', caption: "Get the cake"}
             ]
         }
     })
 ```
 
-3. Generate a hyper refernece from existing resources inside of the hook. Assume you have a file in your `templates/` folder called `home.hbs`
+3. Generate a `hyperReference` from existing resources inside of the hook. Assume you have a file in your `templates/` folder called `home.hbs`
 ```JavaScript
     complete({
         answer: "The cake is a lie!",
@@ -130,6 +135,19 @@ There are three ways to use `hyperReferences` in your hook:
 ```
 
 ## Platform Reactions
+
+Platform reactions are very specific remote procedure calls from within the nexus. Therefore the only way to gain access to a `platformReaction` is to load one directly from the `Brocas service`.
+
+```JavaScript
+    complete({
+        answer: "The cake is a lie!",
+        platform: {
+            platformReactions: [
+                this.getPlatformReactionNamed('Wave')
+            ]
+        }
+    })
+```
 
 ## Handling Hook resources
 

@@ -29,6 +29,7 @@
     "dependencies": {
         "request": "*",
         "request-promise": "*",
-        "find-root": "*"
+        "find-root": "*",
+        "shortid": "*"
     }
 }
