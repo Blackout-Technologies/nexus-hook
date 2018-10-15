@@ -178,6 +178,28 @@ Each hook can come with it's own resources. JS/CSS files for the browser, Images
             -> <keep hbs resources here>
 ```
 
+## Using HTML Templates
+
+Any hook can also come with it's own templates. Important to note here is that a hook template can only be of type "hbs" that follows the handlebars file type standart.
+ > https://handlebarsjs.com
+
+All templates need to be placed in the `./templates/` folder and all template files need to end with the `.bhs` file extension.
+If you want to pass on data to your template to replace the `{{}}` handlebars markers, you can do so in your response function. Simply fill the object called `this.templateVars` with data and the system will replace them for you.
+
+```JavaScript
+this.templateVars = {
+    'movie-poster': resp.Poster,
+    'movie-title': resp.Title
+}
+```
+
+Inside your template, reference your variables like so
+
+```HTML
+<h3>{{movie-title}}</h3><br />
+<img src="{{movie-poster}}" />
+```
+
 # Simple Example Implementation
 
 ```JavaScript
@@ -254,7 +276,7 @@ The rest of the hook will behave exacly the same as it would, when you integrate
 ```JavaScript
 // Test implementation
 const Hook = require('nexus-hook').TestHook;
-var myHook = new Hook("en");
+var myHook = new Hook("en-US");
 
 // run the test hook with the test parameters
 myHook.chat("weahter_intent", "whats the weather like in Bremen", (resp) => {
