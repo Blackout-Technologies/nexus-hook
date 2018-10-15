@@ -291,11 +291,13 @@ myHook.chat("whats the weather like in Bremen", "weahter_intent", [], (resp) => 
 ## Example Output
 ```
 === Testing Hook ===
+
 Weather hook v0.1.0 loaded
 Sorry, I can't find anything.
 The weather in Köln is Clouds with $20.6 degrees
 The weather in Bremen is Clouds with $18.43 degrees
 The weather in Hamburg is Clouds with $18.6 degrees
+
 Weather hook v0.1.0 loaded
 Ich habe keine informationen zu deiner Suche gefunden
 Das Wetter in Bremen ist Clouds mit $18.43 grad
