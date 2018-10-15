@@ -283,7 +283,7 @@ const Hook = require('nexus-hook').TestHook;
 var myHook = new Hook("en-US");
 
 // run the test hook with the test parameters
-myHook.chat("weahter_intent", "whats the weather like in Bremen", (resp) => {
+myHook.chat("whats the weather like in Bremen", "weahter_intent", [], (resp) => {
     console.log(resp.answer);
 });
 ```
