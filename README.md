@@ -268,7 +268,7 @@ The integrations in the `nexusUi` as of version <= *2.0.0* will not support erro
 The `TestHook` class has only one function called `chat` the prototype of the chat function looks like this:
 
 ```JavaScript
-chat(intent, text, complete)
+chat(text, intent, entities, complete);
 ```
 
 You will have to pass an intent name and a text to the chat function of the `TestHook` class. The response will then be returned through the complete callback.
