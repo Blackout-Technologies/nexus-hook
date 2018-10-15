@@ -12,6 +12,7 @@
 |State|`BETA`|
 
 ## License
+
 |Copyright|License
 |---|---|
 |Blackout Technologies|GPLv3|
@@ -24,6 +25,10 @@ the original A.I. training falls under the category `living data`.
 
 The `nexus` by Blackout Technologies is a platform to create Digital Assistants and to connect them via the internet to multiple platforms. Those platforms can be websites, apps or even robots. The `nexus` consists of two major parts, first being the `btNexus` and second the nexusUi. The `btNexus` is the network that connects the A.I. with the nexusUi and the chosen interfaces. The nexusUi is the user interface, that allows the user to create their own A.I.-based Digital Assistant. Those Digital Assistants can be anything, support chatbots or even robot personalities.   
 Every user has one or multiple nexusUi instances or short nexus instances, which means, it's their workspace. One nexusUi / nexus instance can host multiple personalities.
+
+# Example hooks
+
+Movies Hook: https://github.com/Blackout-Technologies/movie-hook
 
 # Before you start
 
