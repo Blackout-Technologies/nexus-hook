@@ -6,7 +6,7 @@
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.1|
+|Latest stable version|0.6.2|
 |Required Nexus UI versions| >= 2.0.57 |
 |Required Brocas versions| >= 1.4.7|
 |State|`BETA`|
@@ -191,7 +191,7 @@ module.exports = class WeatherHook extends Hook {
      *  @param {String} text Original phrasing of the user
      *  @param {Callback} complete Completion callback to continue dialog
      */
-    process(intent, text, complete){
+    process(text, intent, entities, complete){
         // since we already know the phrasing, we can ignore the
         // intent and text parameter
         this.request('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Bremen&units=metric&appid=<ID>', {}, (resp) => {
