@@ -2,20 +2,20 @@
 
 ![Blackout logo](https://www.blackout.ai/wp-content/uploads/2018/08/logo.png)
 
-|-|Description
+|||
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.2|
-|Required Nexus UI versions| >= 2.0.57 |
-|Required Brocas versions| >= 1.4.7|
-|State|`BETA`|
+|Latest stable version|0.6.4|
+|Required nexusUi versions| >= 2.0.71 |
+|Required Brocas versions| >= 1.5.3|
+|State|`Stable`|
 
 ## License
 
 |Copyright|License
 |---|---|
-|Blackout Technologies|GPLv3|
+|(c)2018 Blackout Technologies, Bremen|GPLv3|
 
 Hooks are custom scripts that can be integrated into any point within a dialog
 to access external or living data. Any information and data that is not part of
@@ -25,6 +25,11 @@ the original A.I. training falls under the category `living data`.
 
 The `nexus` by Blackout Technologies is a platform to create Digital Assistants and to connect them via the internet to multiple platforms. Those platforms can be websites, apps or even robots. The `nexus` consists of two major parts, first being the `btNexus` and second the nexusUi. The `btNexus` is the network that connects the A.I. with the nexusUi and the chosen interfaces. The nexusUi is the user interface, that allows the user to create their own A.I.-based Digital Assistant. Those Digital Assistants can be anything, support chatbots or even robot personalities.   
 Every user has one or multiple nexusUi instances or short nexus instances, which means, it's their workspace. One nexusUi / nexus instance can host multiple personalities.
+
+# Prerequisites
+
+* Node.JS / NPM installed on your PC
+* Owner of a btNexus instance or a btNexus account
 
 # Example hooks
 
@@ -81,11 +86,73 @@ The `process()` function is the heart of the hook, it has the following paramete
 |---|---|---|
 |intent|Object|This is the intent that triggered the hook. This object has a `name` and a `confidence` field.|
 |text|String|This string contains the original phrasing of the user|
-|session|Object|The complete user session, including the message thread|
 |complete|Callback|This is the completion function, it has to be called at the end of your script in order to continue the dialog.|
 
- *Additional Variables*
- `this.json` contains the POST request that the user client sent to the chatbot.
+#### Engine Variables
+
+|Parameter|Type|Description|
+|---|---|---|
+|this.json|Object|contains the POST request **body** that the user client sent to the chatbot.|
+|this.session|Object|Contains `this.session.thread` that holds a record of past dialog with the user|
+|this.slots|Object|Contains all slots that the system was able to extract|
+
+```JavaScript
+// load the Hook class from this library
+const Hook = require('nexus-hook').Hook;
+
+// create your own hook as subclass of Hook
+module.exports = class WeatherHook extends Hook {
+    /**
+     *  @param {Object} intent Object with .name and .confidence
+     *  @param {String} text Original phrasing of the user
+     *  @param {Callback} complete Completion callback to continue dialog
+     */
+    process(text, intent, entities, complete){
+        // since we already know the phrasing, we can ignore the
+        // intent and text parameter
+        this.request('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Bremen&units=metric&appid=<ID>', {}, (resp) => {
+            // after the response from the request-pronise came back
+            // complete this hook with an answer string and optionally
+            // with a platform object.
+            complete({
+                answer: 'The weather in Bremen is: '+resp.weather[0].main+" with "+resp.main.temp+" degrees.",
+                platform: {}
+            });
+        });
+    }
+}
+```
+
+#### Build-in Request
+
+Each hook comes with a build in `request` function that you can use to communicate with REST Api's around the globe.
+The prototype of the request function looks like this:
+
+|Parameter|Type|Description|
+|---|---|---|
+|METHOD|String|Request Method (GET, POST, PUT, DELETE, etc.)|
+|Url|String|Url the hook is supposed to query|
+|Body|Object|JSON object that can be used to transport a JSON body|
+|Authentication|Object|(Optional)Auth Object, it must contain `username` and `password` in order to work. `{username: "myUsername", password: "myPassword"}`|
+|Complate callback|Function|Callback function for completion. Will contain an object on success and undefined on error.|
+
+
+```JavaScript
+// since we already know the phrasing, we can ignore the
+// intent and text parameter
+this.request('GET', 'https://your-rest-api.com/', {}, (resp) => {
+    // after the response from the request-pronise came back
+    // complete this hook with an answer string and optionally
+    // with a platform object.
+    //..
+});
+
+// request with authentication
+this.request('GET', 'https://your-rest-api.com/', {},
+    {username: "secret", password: "swortfish"}, (resp) => {
+    // response
+});
+```
 
 ### Completion Callback
 
@@ -207,35 +274,6 @@ Inside your template, reference your variables like so
 ```HTML
 <h3>{{movie-title}}</h3><br />
 <img src="{{movie-poster}}" />
-```
-
-# Simple Example Implementation
-
-```JavaScript
-// load the Hook class from this library
-const Hook = require('nexus-hook').Hook;
-
-// create your own hook as subclass of Hook
-module.exports = class WeatherHook extends Hook {
-    /**
-     *  @param {Object} intent Object with .name and .confidence
-     *  @param {String} text Original phrasing of the user
-     *  @param {Callback} complete Completion callback to continue dialog
-     */
-    process(text, intent, entities, complete){
-        // since we already know the phrasing, we can ignore the
-        // intent and text parameter
-        this.request('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Bremen&units=metric&appid=<ID>', {}, (resp) => {
-            // after the response from the request-pronise came back
-            // complete this hook with an answer string and optionally
-            // with a platform object.
-            complete({
-                answer: 'The weather in Bremen is: '+resp.weather[0].main+" with "+resp.main.temp+" degrees.",
-                platform: {}
-            });
-        });
-    }
-}
 ```
 
 # Handling Languages

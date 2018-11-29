@@ -1,20 +1,28 @@
 {
     "name": "nexus-hook",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "description": "Baseline libary for blackout nexus hooks.",
-    "keywords": ["ai", "btnexus", "nexus", "blackout", "chat", "hook", "chatbot", "artificial intelligence"],
-
+    "keywords": [
+        "ai",
+        "btnexus",
+        "nexus",
+        "blackout",
+        "chat",
+        "hook",
+        "chatbot",
+        "artificial intelligence"
+    ],
+    
     "license": "GPL-2.0-or-later",
-
     "author": {
         "name": "Marc Fiedler",
         "email": "hi@blackout.ai",
         "url": "https://blackout.ai/"
     },
 
-    "repository" :{
-        "type" : "git",
-        "url" : "https://github.com/Blackout-Technologies/nexus-hook.git"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Blackout-Technologies/nexus-hook.git"
     },
 
     "module": "nexus",
@@ -25,11 +33,11 @@
             }
         ]
     },
-
     "dependencies": {
-        "request": "*",
-        "request-promise": "*",
-        "find-root": "*",
-        "shortid": "*"
+        "find-root": "1.1.0",
+        "request": "2.88.0",
+        "request-promise": "4.2.2",
+        "requests": "^0.2.2",
+        "shortid": "2.2.14"
     }
 }
