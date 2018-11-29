@@ -345,6 +345,8 @@ The rest of the hook will behave exacly the same as it would, when you integrate
 const Hook = require('nexus-hook').TestHook;
 var myHook = new Hook("en-US");
 
+myHook.addSlot("city", "Bremen");
+
 // run the test hook with the test parameters
 myHook.chat("whats the weather like in Bremen", "weahter_intent", [], (resp) => {
     console.log(resp.answer);
