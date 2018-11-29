@@ -6,7 +6,7 @@
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.4|
+|Latest stable version|0.6.5|
 |Required nexusUi versions| >= 2.0.71 |
 |Required Brocas versions| >= 1.5.3|
 |State|`Stable`|
@@ -120,6 +120,26 @@ module.exports = class WeatherHook extends Hook {
             });
         });
     }
+}
+```
+
+#### Intent naming convention
+
+Since btNexus version 2.0.61, the classifier will not only return the name of the classified intent and the extracted entities but also the name of the knowledge source this intent belongs to.
+
+For all nexusUi versions >= 2.0.70 the intent names returned by the classifier will look like this:
+
+`knowledgeSourceName -> #intentName`
+
+In order to make it easier to filter by intent, the hook class offers a function called `isIntent(intent, name)`. Use this function to check of you are filtering for the right intent.
+
+```JavaScript
+if( this.isIntent("myWeatherIntent") ){
+    // do something if it is the weather hook
+}else if( this.isIntent("someOtherIntent") ){
+    // do something else here
+}else{
+    // fallback..
 }
 ```
 
