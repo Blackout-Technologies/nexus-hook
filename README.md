@@ -6,7 +6,7 @@
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.7|
+|Latest stable version|0.6.8|
 |Required nexusUi versions| >= 2.0.71 |
 |Required Brocas versions| >= 1.5.3|
 |State|`Stable`|
