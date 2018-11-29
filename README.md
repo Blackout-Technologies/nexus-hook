@@ -6,7 +6,7 @@
 |---|---|
 |Author|Marc Fiedler|
 |Email|dev@blackout.ai|
-|Latest stable version|0.6.5|
+|Latest stable version|0.6.7|
 |Required nexusUi versions| >= 2.0.71 |
 |Required Brocas versions| >= 1.5.3|
 |State|`Stable`|
@@ -134,9 +134,9 @@ For all nexusUi versions >= 2.0.70 the intent names returned by the classifier w
 In order to make it easier to filter by intent, the hook class offers a function called `isIntent(intent, name)`. Use this function to check of you are filtering for the right intent.
 
 ```JavaScript
-if( this.isIntent("myWeatherIntent") ){
+if( this.isIntent(intent, "myWeatherIntent") ){
     // do something if it is the weather hook
-}else if( this.isIntent("someOtherIntent") ){
+}else if( this.isIntent(intent, "someOtherIntent") ){
     // do something else here
 }else{
     // fallback..
